@@ -53,3 +53,5 @@ I need to have the minimum amount (£1) for a single journey.
 
 ### Analysis
 Expect touch_in to raise an error if balance is less than the minimum fare
+
+Last position: https://github.com/makersacademy/course/blob/master/oystercard/10_charge_on_touch_out.md
