@@ -35,3 +35,21 @@ I need my fare deducted from my card
 
 ### Analysis
 Expect deduct(fare) to reduce balance by the given amount
+
+## User Story 5
+
+In order to get through the barriers.
+As a customer
+I need to touch in and out.
+
+### Analysis
+Expect card to have a variable journey/location state
+
+## User Story 6
+
+In order to pay for my journey
+As a customer
+I need to have the minimum amount (£1) for a single journey.
+
+### Analysis
+Expect touch_in to raise an error if balance is less than the minimum fare
