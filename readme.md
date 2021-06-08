@@ -75,7 +75,25 @@ I want to see all my previous trips
 ```
 ### Analysis
 card.print_journeys
-=> [entry_station, exit_station]
+=> {entry_station, exit_station}
+
 Expect card.print_journeys to output an array
+
+## User Story 9
+```
+In order to know how far I have travelled
+As a customer
+I want to know what zone a station is in
+```
+
+### Analysis
+
+station = Station.new
+zones = {zone => station}
+zones[include?(station)] = zone
+station.zone
+> zone
+
+Expect station.zone to return zone
 
 Last position:

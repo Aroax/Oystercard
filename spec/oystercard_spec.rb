@@ -1,4 +1,6 @@
 require 'oystercard'
+# require 'station'
+
 describe Oystercard do
 let(:card) { Oystercard.new }
 let(:max_limit) { Oystercard::MAX_LIMIT }
@@ -84,5 +86,28 @@ let(:fare) { 10 }
     end
   end
 
+describe 'it can do stuff with station objects' do
+  let(:name) { double :name }
+  let(:station) { Station.new(name) }
+  let(:zone) { double :zone }
 
+    it 'can return the name of a station object' do
+      # expect(station.name).to eq name
+      station_test = Station.new("Hendon")
+      expect(station_test.name).to eq("Hendon")
+    end
+
+    # Need to figure out how to substitute hard code for doubles/stub here
+    it 'can return the zone of a given station' do
+      # allow(station.zone).to receive(name.to_s).and_return(1)
+      station_test = Station.new("Hendon")
+      expect(station_test.find_zone).to eq(4)
+    end
+
+    it 'can access the zone outside of the class' do
+      station_test = Station.new("Waterloo")
+      expect(station_test.find_zone).to eq(station_test.zone)
+    end
+end
+  # it 'can return the zone'
 end
