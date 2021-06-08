@@ -6,6 +6,7 @@ class Oystercard
 
   def initialize(balance=DEFAULT_BALANCE)
     @balance = balance
+    @journeys = {}
   end
 
   def top_up(value)
@@ -26,8 +27,16 @@ class Oystercard
     @entry_station = entry_station
   end
 
-  def touch_out
+  def touch_out(exit_station)
+    @exit_station = exit_station
+    # @journeys << {entry: @entry_station, exit: @exit_station}
+    @journeys[@entry_station] = @exit_station
     @entry_station = nil
+
+  end
+
+  def print_journeys
+    @journeys
   end
 
   private
