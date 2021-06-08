@@ -10,6 +10,8 @@ class Station
     @zone = find_zone
   end
 
+  private
+
   def find_zone
     @zones_list.each { |k, v| return k if v.include?(@name) }
   end
