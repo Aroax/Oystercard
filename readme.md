@@ -53,3 +53,12 @@ I need to have the minimum amount (£1) for a single journey.
 
 ### Analysis
 Expect touch_in to raise an error if balance is less than the minimum fare
+
+## User Story 7
+```
+In order to pay for my journey
+As a customer
+I need to know where I've travelled from
+```
+### Analysis
+Expect touch_in to store entry station

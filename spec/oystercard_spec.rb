@@ -3,6 +3,8 @@ describe Oystercard do
 let(:card) { Oystercard.new }
 let(:max_limit) { Oystercard::MAX_LIMIT }
 let(:min_fare) { Oystercard::MINIMUM_FARE }
+let(:entry_station) { double :entry_station }
+let(:token_top_up) { 20 }
 # let(:balance) { Oystercard::@balance }
 
   it 'has a default balance of 0' do
@@ -16,7 +18,7 @@ let(:min_fare) { Oystercard::MINIMUM_FARE }
   context 'when not on a journey' do
     it 'can be touched in' do
       card.top_up(min_fare)
-      card.touch_in
+      card.touch_in(entry_station)
       expect(card.in_journey?).to be(true)
     end
 
@@ -34,13 +36,13 @@ let(:min_fare) { Oystercard::MINIMUM_FARE }
     end
 
     it 'raises an error if try to touch in without the minimum fare' do
-      expect{card.touch_in}.to raise_error "Cannot touch in: not enough funds"
+      expect{card.touch_in(entry_station)}.to raise_error "Cannot touch in: not enough funds"
     end
   end
 
   context 'when on a journey' do
     it 'can be touched out' do
-      expect(card.touch_out).to eq(false)
+      expect(card.touch_out).to eq(nil)
     end
 
     it 'deducts a fare from the balance' do
@@ -48,6 +50,16 @@ let(:min_fare) { Oystercard::MINIMUM_FARE }
       top_up_amount = 20
       card.top_up(top_up_amount)
       expect{card.deduct(fare)}.to change{card.balance}.from(top_up_amount).to(top_up_amount - fare)
+    end
+
+    it 'stores the entry station' do
+      card.top_up(token_top_up)
+      expect(card.touch_in(entry_station)).to eq(entry_station)
+    end
+
+    it 'forgets the entry station on touch_out' do
+      card.touch_out
+      expect(card.entry_station).to eq(nil)
     end
   end
 end
