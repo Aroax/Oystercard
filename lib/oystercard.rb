@@ -1,5 +1,5 @@
 class Oystercard
-  attr_reader :balance, :entry_station
+  attr_reader :balance, :entry_station, :journeys
   DEFAULT_BALANCE = 0
   MAX_LIMIT = 90
   MINIMUM_FARE = 1
@@ -29,17 +29,15 @@ class Oystercard
 
   def touch_out(exit_station)
     @exit_station = exit_station
-    # @journeys << {entry: @entry_station, exit: @exit_station}
-    @journeys[@entry_station] = @exit_station
-    @entry_station = nil
-
-  end
-
-  def print_journeys
-    @journeys
+    build_journey(exit_station)
   end
 
   private
+
+  def build_journey(exit_station)
+    @journeys[@entry_station] = exit_station
+    @entry_station, @exit_station = nil
+  end
 
   def busted?(top_up)
     @balance + top_up > MAX_LIMIT

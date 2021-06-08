@@ -40,11 +40,26 @@ let(:fare) { 10 }
       expect{card.touch_in(entry_station)}.to raise_error "Cannot touch in: not enough funds"
     end
 
+    it 'has a default empty journey history' do
+      expect(card.journeys).to be_empty
+    end
+
+    it 'returns the previous journey' do
+      card.top_up(token_top_up)
+      card.touch_in(entry_station)
+      card.touch_out(exit_station)
+      expect(card.journeys).to eq({entry_station => exit_station})
+    end
+
     it 'returns a list of all journeys' do
       card.top_up(token_top_up)
       card.touch_in(entry_station)
       card.touch_out(exit_station)
-      expect(card.print_journeys).to eq({entry_station => exit_station})
+      card.touch_in("station 3")
+      card.touch_out("station 4")
+      expect(card.journeys).to eq({
+        entry_station => exit_station,
+        "station 3" => "station 4"})
     end
   end
 
@@ -68,4 +83,6 @@ let(:fare) { 10 }
       expect(card.entry_station).to eq(nil)
     end
   end
+
+
 end
