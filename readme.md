@@ -96,4 +96,44 @@ station.zone
 
 Expect station.zone to return zone
 
-Last position:
+## User Story 10
+```
+In order to be charged correctly
+As a customer
+I need a penalty charge deducted if I fail to touch in or out
+```
+
+### Analysis
+
+We now need to track journey state. Worth creating a new Journey class and adapting tests accordingly.
+
+touch_in(entry_station)
+touch_in(new_entry_station)
+expect(card.penalty) to deduct from card.balance
+
+
+Last position: https://github.com/makersacademy/course/blob/master/oystercard/14_no_touch_in_or_out.md
+
+
+Oystercard owns:
+- Card limits (min fare, max balance, default balance)
+- Balance
+- touch_in
+- touch_out
+- top_up
+- journey history
+INTERFACE
+
+Journey owns:
+- entry_station
+- exit_station
+- on_journey
+- zone-fare lookup table (hash)
+- calculate_fare
+RETURNS: fare
+
+Station owns:
+- station_name
+- station_zone
+- station-zone lookup table (hash)
+RETURNS: zone
