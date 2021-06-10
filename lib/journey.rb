@@ -22,10 +22,12 @@ PENALTY_FARE = 6
   end
 
   def set_entry(entry_station)
+    @on_journey = true
     @entry_station = entry_station
   end
 
   def set_exit(exit_station)
+    @on_journey = false
     @exit_station = exit_station
   end
 

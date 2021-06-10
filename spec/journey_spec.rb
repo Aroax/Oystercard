@@ -14,7 +14,9 @@ describe Journey do
 
   it 'knows whether a journey is complete' do
     # journey = Journey.new(entry_station)
-    expect(journey).to respond_to(:complete?)
+    journey.set_entry(entry_station)
+    journey.set_exit(exit_station)
+    expect(journey.on_journey).to eq(false)
   end
 
   it "knows when it is on a journey" do
