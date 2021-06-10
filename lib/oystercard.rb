@@ -21,25 +21,30 @@ class Oystercard
     @balance -= fare
   end
 
-  def in_journey?
-    @entry_station != nil
-  end
+# Extracted in_journey? method behaviour to Journey class
 
   def touch_in(entry_station)
     fail "Cannot touch in: not enough funds" if no_funds?
-    @entry_station = entry_station
+    @journey = Journey.new
+    @journey.set_entry(entry_station)
   end
 
   def touch_out(exit_station)
-    @exit_station = exit_station
-    build_journey(exit_station)
+    @journey.set_exit(exit_station)
+    deduct(@journey.calculate_fare)
+    store_journey
   end
 
   private
 
-  def build_journey(exit_station)
-    @journeys[@entry_station] = exit_station
-    @entry_station, @exit_station = nil
+  def store_journey
+    @journeys[@journey.entry_station] = @journey.exit_station
+    clear_journey
+  end
+
+  def clear_journey
+    @journey.set_exit(nil)
+    @journey.set_entry(nil)
   end
 
   def busted?(top_up)

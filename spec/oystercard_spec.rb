@@ -15,15 +15,10 @@ let(:fare) { 10 }
     expect(subject.balance).to eq(0)
   end
 
-  it 'can track whether it is on a journey or not' do
-    expect(card).to respond_to(:in_journey?)
-  end
-
   context 'when not on a journey' do
     it 'can be touched in' do
       card.top_up(min_fare)
-      card.touch_in(entry_station)
-      expect(card.in_journey?).to be(true)
+      expect(card.touch_in(entry_station)).to eq(entry_station)
     end
 
     describe '#top_up' do
@@ -67,6 +62,8 @@ let(:fare) { 10 }
 
   context 'when on a journey' do
     it 'can be touched out' do
+      card.top_up(token_top_up)
+      card.touch_in(entry_station)
       expect(card.touch_out(exit_station)).to eq(nil)
     end
 
@@ -80,10 +77,6 @@ let(:fare) { 10 }
       expect(card.touch_in(entry_station)).to eq(entry_station)
     end
 
-    it 'forgets the entry station on touch_out' do
-      card.touch_out(exit_station)
-      expect(card.entry_station).to eq(nil)
-    end
   end
 
 end
