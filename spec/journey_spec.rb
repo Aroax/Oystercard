@@ -10,25 +10,34 @@ describe Journey do
   let(:token_top_up) { 20 }
   let(:fare) { 10 }
 
+
   it 'knows whether a journey is complete' do
-    expect(subject).to respond_to(:complete?)
+    journey = Journey.new(entry_station)
+    expect(journey).to respond_to(:complete?)
   end
 
   it "knows when it is on a journey" do
-    expect(subject.journey).to eq(true || false)
+    journey = Journey.new(entry_station)
+    expect(journey.on_journey).to eq(true || false)
   end
 
   context "when making a journey" do
     it 'stores the entry station' do
+      journey = Journey.new(entry_station)
+      expect(journey.entry_station).to eq(entry_station)
+    end
 
+    it 'store the exit station' do
+      journey = Journey.new(entry_station)
+      journey.set_exit("Whitechapel")
+      expect(journey.exit_station).to eq("Whitechapel")
     end
   end
+
+
 
   # it should be responsible for starting a journey, finishing a journey,
   # calculating the fare of a journey,
   # and returning whether or not the journey is complete.
 
-  # it "text" do
-  #
-  # end
 end
